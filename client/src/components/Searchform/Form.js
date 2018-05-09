@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 
 class Form extends React.Component {
-  // Setting the initial values of this.state.term and this.state.startYear
+  // Setting the initial values of this.state.term, this.state.startYear, this.state.endYear
   state = {
     term: "",
     startYear: "",
@@ -26,7 +26,9 @@ class Form extends React.Component {
     authKey + "&q=" + this.state.term + "&begin_date=" + this.state.startYear + "0101&end_date=" + this.state.endYear + "1231";
 
     return axios.get(queryURL)
-    .then(res => console.log(res));
+    .then(res => {
+      this.props.name(res.data.response.docs)
+    });
   };
 
 
@@ -42,35 +44,37 @@ class Form extends React.Component {
 
   render() {
     return (
-      <div className="form-group">
-        {/*<p>Username: {this.state.term}</p>
-      <p>Password: {this.state.startYear}</p>
-        */}
-        <input
-          className="form-control"
-          type="text"
-          placeholder="Search Term"
-          name="term"
-          value={this.state.term}
-          onChange={this.handleInputChange}
-        />
-        <input
-          className="form-control"
-          type="text"
-          placeholder="Start Year"
-          name="startYear"
-          value={this.state.startYear}
-          onChange={this.handleInputChange}
-        />
-        <input
-          className="form-control"
-          type="text"
-          placeholder="End Year"
-          name="endYear"
-          value={this.state.endYear}
-          onChange={this.handleInputChange}
-        />
-        <button onClick={this.handleFormSubmit}>Submit</button>
+      <div className="alert alert-primary">
+        <div className="form-group">
+          <input
+            className="form-control"
+            type="text"
+            placeholder="Search Term"
+            name="term"
+            value={this.state.term}
+            onChange={this.handleInputChange}
+          />
+          <input
+            className="form-control"
+            type="text"
+            placeholder="Start Year"
+            name="startYear"
+            value={this.state.startYear}
+            onChange={this.handleInputChange}
+          />
+          <input
+            className="form-control"
+            type="text"
+            placeholder="End Year"
+            name="endYear"
+            value={this.state.endYear}
+            onChange={this.handleInputChange}
+          />
+          <button
+            className="btn btn-primary"
+            onClick={this.handleFormSubmit}>Submit
+          </button>
+        </div>
       </div>
     );
   }
